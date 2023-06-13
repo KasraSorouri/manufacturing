@@ -4,10 +4,10 @@ const login = async(req, res) => {
   const { username, password } = req.body
 
   try {
-    const token = await authService.login({ username, password })
-    res.status(200).send({ token, username: user.username, name:`${user.firstName} ${user.lastName}` })
+    const { token, user, firstName, lastName } = await authService.login({ username, password })
+    res.status(200).send({ token, user, firstName, lastName })
   } catch (err) {
-    res.status(401).json({ error: 'Invalid username or password'})
+    res.status(401).json({ error: 'Invalid username or password' })
   }
 }
 

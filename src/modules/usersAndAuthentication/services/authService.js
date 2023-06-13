@@ -40,7 +40,7 @@ const login = async ({ username, password }) => {
 
   const token = jwt.sign(userForToken, SECRET)
 
-  return token
+  return { token, username: user.username, firstName: user.firstName, lastName: user.lastName }
 
 }
 
