@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 
 const loginRouter = require('./modules/usersAndAuthentication/routes/login')
 const userRouter = require('./modules/usersAndAuthentication/routes/users')
@@ -7,7 +8,7 @@ const rightRouter = require('./modules/usersAndAuthentication/routes/rights')
 
 
 const app = express()
-app.use(express.json())
+app.use(express.json(), cors())
 
 app.use('/api/auth/login',loginRouter)
 app.use('/api/auth/user',userRouter)
