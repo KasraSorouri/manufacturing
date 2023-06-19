@@ -46,7 +46,7 @@ const updateRoleRights = async ({ id, rights }) => {
     const role = await Role.findByPk(id)
     await role.setRights([])
     await role.addRights(okRights)
-    const result = await Role.findByPk(req.params.id,{
+    const result = await Role.findByPk(id,{
       include: {
         model: Right,
         attributes: ['right', 'relatedModule'],

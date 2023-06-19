@@ -11,7 +11,7 @@ router.get('/:id', roleController.getRole)
 // add role
 router.post('/', tokenExtractor, roleAuthority(['ADMIN']), roleController.addRole)
 
-// assign rights 
+// assign rights
 router.post('/:id/rights', tokenExtractor, roleAuthority(['ADMIN']) , roleController.assignRights)
 
 module.exports = router
