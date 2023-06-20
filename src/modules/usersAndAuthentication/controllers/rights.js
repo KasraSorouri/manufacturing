@@ -5,7 +5,7 @@ const getAllRights = async (req, res) => {
     const rights = await rightServices.getAllRights()
     res.json(rights)
   } catch (err) {
-    res.status(500).json({ error: 'No right found'})
+    res.status(500).json({ error: 'No right found' })
   }
 }
 
@@ -15,18 +15,17 @@ const getRight = async (req, res) => {
     const right = await rightServices.getRight(id)
     res.json(right)
   } catch (err) {
-    res.status(404).json({ error: 'Right not found'})
+    res.status(404).json({ error: 'Right not found' })
   }
 }
 
 const addRight = async (req, res) => {
-  const id = req.params.id
   const rightData = req.body
   try {
-    const newRight = await rightServices.createRight(id,rightData)
+    const newRight = await rightServices.createRight(rightData)
     res.status(201).json(newRight)
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create right' });
+    res.status(500).json({ error: 'Failed to create right' })
   }
 }
 
