@@ -33,14 +33,16 @@ const getUser = async(id) => {
       }
     }
   })
-return user
+  return user
 }
 
 const createUser = async (userData) => {
-
   const newUser = await userProcessor(userData)
   try {
     const user = await User.create(newUser)
+    if (userData.roles.length > 0) {
+      updateUserRoles({ id : user.id, roles: userData.roles })
+    }
     return user
   } catch(err) {
     throw new Error(err.message)
@@ -68,7 +70,7 @@ const updateUserRoles = async ({ id, roles }) => {
   await user.setRoles([])
   const okRoles = await Role.findAll({ where: { id: [...roles], active: true } })
   if (okRoles.length === 0) {
-   throw new Error('no Active role found')
+    throw new Error('no Active role found')
   }
   try {
     await user.addRoles(okRoles)

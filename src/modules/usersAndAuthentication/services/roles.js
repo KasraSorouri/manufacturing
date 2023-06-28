@@ -30,6 +30,9 @@ const createRole = async(roleData) => {
 
   try {
     const role = await Role.create(roleData)
+    if (roleData.rights.length > 0) {
+      updateRoleRights({ id : role.id, rights: roleData.rights })
+    }
     return role
   } catch(err) {
     throw new Error(err.message)
