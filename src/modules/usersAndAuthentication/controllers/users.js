@@ -24,6 +24,7 @@ const addUser = async (req, res) => {
   const userData = req.body
   try {
     const newUser = await userServices.createUser(userData)
+    delete newUser.password
     res.status(201).json(newUser)
   } catch (err) {
     res.status(500).json({ error: 'Failed to create user' })
@@ -32,15 +33,17 @@ const addUser = async (req, res) => {
 
 const editUser = async (req, res) => {
   const id = Number(req.params.id)
-  if (!(id === req.decodedToken.id || req.authorized)) {
-    res.status(401).json({ error: 'Operation not allowed' })
+  if (!(id === req.decodedToken.id || req.permited)) {
+    return res.status(401).json({ error: 'Operation not allowed' })
   }
-  const newData = req.body
+  const userData = req.body
+
   try {
-    const newUser = await userServices.updateUser(id,newData)
-    res.json(newUser)
+    const newUser = await userServices.updateUser({ id, userData })
+    delete newUser.dataValues.password
+    res.status(200).json(newUser.dataValues)
   } catch (err) {
-    res.status(500).json({ error: 'Failed to update user' })
+    res.status(500).json({ error: 'Failed to update user', message: err.message })
   }
 }
 

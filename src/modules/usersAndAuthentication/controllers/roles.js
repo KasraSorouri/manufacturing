@@ -29,6 +29,19 @@ const addRole = async (req, res) => {
   }
 }
 
+const editRole = async (req, res) => {
+  const id = Number(req.params.id)
+  const roleData = req.body
+
+  try {
+    const newRole = await roleServices.updateRole({ id, roleData })
+    res.status(200).json(newRole.dataValues)
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update role', message: err.message })
+  }
+}
+
+
 const assignRights = async (req, res) => {
   const id = req.params.id
   const rights = req.body
@@ -44,5 +57,6 @@ module.exports = {
   getAllRoles,
   getRole,
   addRole,
+  editRole,
   assignRights
 }

@@ -4,14 +4,17 @@ const { tokenExtractor, roleAuthority } = require('../utils/midwares')
 
 const roleController = require('../controllers/roles')
 
-// get roles
+// Get Roles
 router.get('/', roleController.getAllRoles)
 router.get('/:id', roleController.getRole)
 
-// add role
+// Add Role
 router.post('/', tokenExtractor, roleAuthority(['ADMIN']), roleController.addRole)
 
-// assign rights
+// Edit Role
+router.put('/:id', tokenExtractor, roleAuthority(['ADMIN']), roleController.editRole)
+
+// Assign Rights
 router.post('/:id/rights', tokenExtractor, roleAuthority(['ADMIN']) , roleController.assignRights)
 
 module.exports = router

@@ -3,17 +3,17 @@ const router = require('express').Router()
 const userController = require('../controllers/users')
 const { tokenExtractor, roleAuthority } = require('../utils/midwares')
 
-// get users
+// Get Users
 router.get('/', userController.getAllUsers)
-router.get('/:id', userController.getUser) 
+router.get('/:id', userController.getUser)
 
-// create user
+// Create User
 router.post('/', tokenExtractor, roleAuthority(['ADMIN']), userController.addUser)
 
-//  edit user
+// Edit User
 router.put('/:id', tokenExtractor, roleAuthority(['ADMIN']), userController.editUser)
 
-// assign roles
+// Assign Roles
 router.post('/:id/roles', tokenExtractor, roleAuthority(['ADMIN']) , userController.assignRoles)
 
 

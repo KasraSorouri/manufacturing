@@ -9,12 +9,15 @@ const passwordHashMaker = async(password) => {
 const userProcessor = async(userData) => {
   const newUser = {
     username: userData.username,
-    password: await passwordHashMaker(userData.password),
+    //password: await passwordHashMaker(userData.password),
     firstName: userData.firstName,
     lastName: userData.lastName,
     active: userData.active || false,
     dateCreated: new Date(),
-    roleId: userData.roleId
+    roles: userData.roles
+  }
+  if (userData.password) {
+    newUser.password = await passwordHashMaker(userData.password)
   }
   return newUser
 }

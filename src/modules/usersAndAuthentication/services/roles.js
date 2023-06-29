@@ -3,8 +3,7 @@ const { Role, User, Right } = require('../models')
 const getAllRoles = async() => {
   const roles = await Role.findAll({
     include: {
-      model: User,
-      attributes: ['id','username','firstName','lastName','active'],
+      model: Right,
       through: {
         attributes: []
       }
@@ -30,6 +29,21 @@ const createRole = async(roleData) => {
 
   try {
     const role = await Role.create(roleData)
+    if (roleData.rights.length > 0) {
+      updateRoleRights({ id : role.id, rights: roleData.rights })
+    }
+    return role
+  } catch(err) {
+    throw new Error(err.message)
+  }
+}
+
+
+const updateRole = async ({ id, roleData }) => {
+
+  try {
+    const role = await Role.findByPk(id)
+    role.update(roleData)
     if (roleData.rights.length > 0) {
       updateRoleRights({ id : role.id, rights: roleData.rights })
     }
@@ -68,5 +82,6 @@ module.exports = {
   getAllRoles,
   getRole,
   createRole,
+  updateRole,
   updateRoleRights
 }

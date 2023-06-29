@@ -6,7 +6,7 @@ const getAllUsers = async() => {
     attributes : { exclude: ['password', 'userRoles'] },
     include: {
       model: Role,
-      attributes: ['roleName'],
+      //attributes: ['roleName'],
       through: {
         attributes: []
       }
@@ -50,11 +50,14 @@ const createUser = async (userData) => {
 }
 
 const updateUser = async ({ id, userData }) => {
-
   const newData = await userProcessor(userData)
+
   try {
     const user = await User.findByPk(id)
     user.update(newData)
+    if (userData.roles.length > 0) {
+      updateUserRoles({ id : user.id, roles: userData.roles })
+    }
     return user
   } catch(err) {
     throw new Error(err.message)
