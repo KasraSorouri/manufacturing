@@ -37,7 +37,6 @@ const editUser = async (req, res) => {
     return res.status(401).json({ error: 'Operation not allowed' })
   }
   const userData = req.body
-
   try {
     const newUser = await userServices.updateUser({ id, userData })
     delete newUser.dataValues.password

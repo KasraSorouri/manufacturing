@@ -4,7 +4,9 @@ const { Umzug, SequelizeStorage } = require('umzug')
 const logger = require('../utils/logger')
 
 
-const sequelize = new Sequelize(DATABASE_URI)
+const sequelize = new Sequelize(DATABASE_URI,{
+  logging: false,
+})
 
 const migrationConf = {
   migrations: {
