@@ -25,7 +25,7 @@ const addRole = async (req, res) => {
     const newRole = await roleServices.createRole(roleData)
     res.status(201).json(newRole)
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create role' })
+    res.status(409).json({ error: `${err}` })
   }
 }
 
@@ -37,7 +37,7 @@ const editRole = async (req, res) => {
     const newRole = await roleServices.updateRole({ id, roleData })
     res.status(200).json(newRole.dataValues)
   } catch (err) {
-    res.status(500).json({ error: 'Failed to update role', message: err.message })
+    res.status(409).json({ error: `${err}` })
   }
 }
 
@@ -49,7 +49,7 @@ const assignRights = async (req, res) => {
     const resulat = await roleServices.updateRoleRights(id,rights)
     res.json(resulat)
   } catch (err) {
-    res.status(500).json({ error: 'Failed to assign rights' })
+    res.status(409).json({ error: 'Failed to assign rights' })
   }
 }
 

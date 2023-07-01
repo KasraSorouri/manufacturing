@@ -27,7 +27,7 @@ const addUser = async (req, res) => {
     delete newUser.password
     res.status(201).json(newUser)
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create user' })
+    res.status(409).json({ error: `${err}` })
   }
 }
 
@@ -42,7 +42,7 @@ const editUser = async (req, res) => {
     delete newUser.dataValues.password
     res.status(200).json(newUser.dataValues)
   } catch (err) {
-    res.status(500).json({ error: 'Failed to update user', message: err.message })
+    res.status(409).json({ error: `${err}` })
   }
 }
 
@@ -53,7 +53,7 @@ const assignRoles = async (req, res) => {
     const resulat = await userServices.updateUserRoles(id,roles)
     res.json(resulat)
   } catch (err) {
-    res.status(500).json({ error: 'Failed to assign roles' })
+    res.status(409).json({ error: `${err}` })
   }
 }
 

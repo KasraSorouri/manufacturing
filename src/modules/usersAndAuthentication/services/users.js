@@ -45,7 +45,7 @@ const createUser = async (userData) => {
     }
     return user
   } catch(err) {
-    throw new Error(err.message)
+    throw new Error(err.original.detail)
   }
 }
 
@@ -54,13 +54,13 @@ const updateUser = async ({ id, userData }) => {
 
   try {
     const user = await User.findByPk(id)
-    user.update(newData)
+    await user.update(newData)
     if (userData.roles.length > 0) {
       updateUserRoles({ id : user.id, roles: userData.roles })
     }
     return user
   } catch(err) {
-    throw new Error(err.message)
+    throw new Error(err.original.detail)
   }
 }
 

@@ -34,7 +34,7 @@ const createRole = async(roleData) => {
     }
     return role
   } catch(err) {
-    throw new Error(err.message)
+    throw new Error(err.original.detail)
   }
 }
 
@@ -43,13 +43,13 @@ const updateRole = async ({ id, roleData }) => {
 
   try {
     const role = await Role.findByPk(id)
-    role.update(roleData)
+    await role.update(roleData)
     if (roleData.rights.length > 0) {
       updateRoleRights({ id : role.id, rights: roleData.rights })
     }
     return role
   } catch(err) {
-    throw new Error(err.message)
+    throw new Error(err.original.detail)
   }
 }
 
