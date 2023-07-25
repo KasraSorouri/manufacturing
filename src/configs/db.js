@@ -5,7 +5,7 @@ const logger = require('../utils/logger')
 
 
 const sequelize = new Sequelize(DATABASE_URI,{
-  logging: false,
+  logging: true,
 })
 
 const migrationConf = {
