@@ -24,7 +24,7 @@ TechnicalItem.init({
     allowNull: false,
     defaultValue: 'No'
   },
-  spesification: {
+  specification: {
     type: DataTypes.JSON
   },
   alternativeCode: {
@@ -33,7 +33,7 @@ TechnicalItem.init({
 }, {
   sequelize,
   underscored: true,
-  timestamps: true,
+  timestamps: false,
   modelName: 'technicalItem'
 })
 

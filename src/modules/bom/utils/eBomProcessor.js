@@ -9,7 +9,7 @@ const eBomProcessor = async({ eBomData, user }) => {
     userCreated: user,
     active: eBomData.active,
     master: eBomData.master,
-    //masterId: 1,
+    masterId: eBomData.masterId,
     productName: eBomData.productName,
     drawingNo: eBomData.drawingNo,
     drawingPage: eBomData.drawingPage,

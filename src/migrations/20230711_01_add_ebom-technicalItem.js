@@ -76,12 +76,63 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
+      item: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      qty: {
+        type: DataTypes.NUMERIC,
+      },
+      unit: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: 'No'
+      },
+      qty_changable: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
+      spesification: {
+        type: DataTypes.JSON
+      },
+      sub_module: {
+        type: DataTypes.INTEGER
+      },
+      relation_type: {
+        type: DataTypes.ENUM('link','copy')
+      },
+      alternative_code: {
+        type: DataTypes.TEXT
+      },
+      copied_from: {
+        type: DataTypes.INTEGER
+      }
     })
     await queryInterface.createTable('technical_items', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
+      },
+      technical_name: {
+        type: DataTypes.TEXT,
+      },
+      technical_code: {
+        type: DataTypes.TEXT
+      },
+      technical_category: {
+        type: DataTypes.TEXT
+      },
+      unit: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: 'No'
+      },
+      specification: {
+        type: DataTypes.JSON
+      },
+      alternative_code: {
+        type: DataTypes.TEXT
       },
     })
   },

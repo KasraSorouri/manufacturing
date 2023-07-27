@@ -7,8 +7,6 @@ const User = require('../../usersAndAuthentication/models/user')
 EBom.hasMany(EBomItem)
 EBomItem.belongsTo(EBom)
 
-EBomItem.hasMany(TechnicalItem)
-
 EBom.belongsTo(User, { foreignKey: 'userCreated' })
 
 EBom.belongsTo(EBom, { as: 'Parent', foreignKey: 'masterId' })

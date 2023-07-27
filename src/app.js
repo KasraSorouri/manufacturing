@@ -6,6 +6,7 @@ const userRouter = require('./modules/usersAndAuthentication/routes/users')
 const roleRouter = require('./modules/usersAndAuthentication/routes/roles')
 const rightRouter = require('./modules/usersAndAuthentication/routes/rights')
 const eBomRouter = require('./modules/bom/routes/eBom')
+const technicalItem = require('./modules/bom/routes/technicalItem')
 
 
 const app = express()
@@ -17,5 +18,7 @@ app.use('/api/auth/role',roleRouter)
 app.use('/api/auth/right',rightRouter)
 
 app.use('/api/bom/ebom',eBomRouter)
+app.use('/api/bom/tech-item',technicalItem)
+
 
 module.exports = app

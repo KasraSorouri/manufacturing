@@ -43,6 +43,9 @@ EBom.init({
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
+  masterID: {
+    type: DataTypes.TEXT,
+  },
   productName: {
     type: DataTypes.TEXT,
   },

@@ -38,16 +38,13 @@ EBomItem.init({
   alternativeCode: {
     type: DataTypes.TEXT
   },
-  copiedfrom: {
+  copiedFrom: {
     type: DataTypes.INTEGER
-  },
-  section: {
-    type: DataTypes.TEXT
   }
 }, {
   sequelize,
   underscored: true,
-  timestamps: true,
+  timestamps: false,
   modelName: 'ebomItem'
 })
 
