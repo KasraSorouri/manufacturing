@@ -22,7 +22,6 @@ const getTechnicalItem = async (req, res) => {
 
 const addTechnicalItem = async (req, res) => {
   const technicalItemData = req.body
-  console.log('technical item * controller * technicalItemData ->',technicalItemData)
   try {
     const newTechnicalItem = await technicalItem.createTechnicalItem({ technicalItemData })
     res.status(201).json(newTechnicalItem)

@@ -76,9 +76,24 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
+      ebom_id: {
+        type: DataTypes.INTEGER,
+        refrences: {
+          model: 'eboms',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       item: {
-        type: DataTypes.TEXT,
+        type: DataTypes.INTEGER,
         allowNull: false,
+        refrences: {
+          model: 'technical_items',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
       },
       qty: {
         type: DataTypes.NUMERIC,

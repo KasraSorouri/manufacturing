@@ -11,7 +11,7 @@ EBomItem.init({
     autoIncrement: true
   },
   item: {
-    type: DataTypes.TEXT,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   qty: {

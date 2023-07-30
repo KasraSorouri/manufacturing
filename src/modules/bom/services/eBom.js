@@ -28,6 +28,7 @@ const createEBom = async ({ eBomData, user }) => {
     const eBom = await EBom.create(newEBomData)
     return eBom
   } catch(err) {
+    console.log('Ebom * Services * add * Error ->',err)
     throw new Error(err.original.detail)
   }
 }
