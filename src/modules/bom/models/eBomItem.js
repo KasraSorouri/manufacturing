@@ -30,16 +30,23 @@ EBomItem.init({
     type: DataTypes.JSON
   },
   subModule: {
-    type: DataTypes.INTEGER
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
   relationType: {
-    type: DataTypes.ENUM('link','copy')
+    type: DataTypes.ENUM('link','copy'),
+    allowNull: function () {
+      return this.subModule === false
+    },
   },
-  alternativeCode: {
-    type: DataTypes.TEXT
+  relatedTo: {
+    type: DataTypes.INTEGER,
+    allowNull: function () {
+      return this.subModule === false
+    }
   },
-  copiedFrom: {
-    type: DataTypes.INTEGER
+  note : {
+    type: DataTypes.JSON
   }
 }, {
   sequelize,

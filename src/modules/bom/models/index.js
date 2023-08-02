@@ -14,6 +14,8 @@ EBom.hasMany(EBom, { as: 'Children', foreignKey: 'masterId' })
 
 EBomItem.belongsTo(TechnicalItem, { foreignKey: 'item' })
 
+TechnicalItem.belongsTo(EBom, { foreignKey: 'relatedBom' })
+
 module.exports = {
   EBom,
   EBomItem,

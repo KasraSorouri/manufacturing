@@ -6,10 +6,13 @@ const technicalItemProcessor = async( props ) => {
   const newTechnicalItem = {
     technicalName: technicalItem.technicalName,
     technicalCode: technicalItem.technicalCode,
-    technicalCategory: technicalItem.technicalCategory,
+    specifications: technicalItem.specifications,
     unit: technicalItem.unit,
-    specification: technicalItem.specification,
-    alternativeCode: technicalItem.alternativeCode || null,
+    alternativeUnit: technicalItem.alternativeUnit,
+    subordinate: technicalItem.subordinate,
+    subordinateTo: technicalItem.subordinateTo,
+    itemType: technicalItem.itemType,
+    relatedBom: technicalItem.relatedBom,
   }
   //console.log('** technicalItem processed data ->', newTechnicalItem)
 

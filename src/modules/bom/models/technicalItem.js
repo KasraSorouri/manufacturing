@@ -12,24 +12,41 @@ TechnicalItem.init({
   },
   technicalName: {
     type: DataTypes.TEXT,
+    allowNull: false,
+    unique: true,
   },
   technicalCode: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    allowNull: false,
+    unique: true,
   },
-  technicalCategory: {
-    type: DataTypes.TEXT
+  specifications: {
+    type: DataTypes.JSON
   },
   unit: {
     type: DataTypes.TEXT,
     allowNull: false,
     defaultValue: 'No'
   },
-  specification: {
-    type: DataTypes.JSON
+  alternativeUnit: {
+    type: DataTypes.TEXT,
   },
-  alternativeCode: {
-    type: DataTypes.TEXT
+  subordinate: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
+  subordinateTo: {
+    type: DataTypes.INTEGER,
+  },
+  itemType: {
+    type: DataTypes.ENUM('SUPPLY','MAKE')
+  },
+  relatedBom: {
+    type: DataTypes.INTEGER,
+    allowNull: function () {
+      return this.itemType !== 'MAKE'
+    }
+  }
 }, {
   sequelize,
   underscored: true,

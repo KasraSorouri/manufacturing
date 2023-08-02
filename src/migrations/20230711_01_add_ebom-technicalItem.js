@@ -111,16 +111,23 @@ module.exports = {
         type: DataTypes.JSON
       },
       sub_module: {
-        type: DataTypes.INTEGER
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
       relation_type: {
-        type: DataTypes.ENUM('link','copy')
+        type: DataTypes.ENUM('link','copy'),
+        allowNull: function () {
+          return this.subModule === false
+        },
       },
-      alternative_code: {
-        type: DataTypes.TEXT
+      related_to: {
+        type: DataTypes.INTEGER,
+        allowNull: function () {
+          return this.subModule === false
+        }
       },
-      copied_from: {
-        type: DataTypes.INTEGER
+      note : {
+        type: DataTypes.JSON
       }
     })
     await queryInterface.createTable('technical_items', {
@@ -131,24 +138,41 @@ module.exports = {
       },
       technical_name: {
         type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true,
       },
       technical_code: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true,
       },
-      technical_category: {
-        type: DataTypes.TEXT
+      specifications: {
+        type: DataTypes.JSON
       },
       unit: {
         type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: 'No'
       },
-      specification: {
-        type: DataTypes.JSON
+      alternative_unit: {
+        type: DataTypes.TEXT,
       },
-      alternative_code: {
-        type: DataTypes.TEXT
+      subordinate: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
+      subordinate_to: {
+        type: DataTypes.INTEGER,
+      },
+      item_type: {
+        type: DataTypes.ENUM('SUPPLY','MAKE')
+      },
+      related_bom: {
+        type: DataTypes.INTEGER,
+        allowNull: function () {
+          return this.itemType !== 'MAKE'
+        }
+      }
     })
   },
   down: async ({ context: queryInterface }) => {
