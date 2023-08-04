@@ -130,7 +130,7 @@ module.exports = {
         type: DataTypes.JSON
       }
     })
-    await queryInterface.createTable('technical_items', {
+    await queryInterface.createTable('tech_items', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -161,16 +161,40 @@ module.exports = {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      subordinate_to: {
-        type: DataTypes.INTEGER,
-      },
-      item_type: {
-        type: DataTypes.ENUM('SUPPLY','MAKE')
+      supply_type: {
+        type: DataTypes.ENUM('BUY','MAKE'),
+        defaultValue: 'BUY'
       },
       related_bom: {
         type: DataTypes.INTEGER,
         allowNull: function () {
           return this.itemType !== 'MAKE'
+        }
+      },
+      active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+      },
+    })
+    await queryInterface.createTable('tech_item_subordinations', {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      tech_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'tech_items',
+          key: 'id'
+        }
+      },
+      subordinate_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'tech_items',
+          key: 'id'
         }
       }
     })
@@ -178,6 +202,7 @@ module.exports = {
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable('ebom_items')
     await queryInterface.dropTable('eboms')
-    await queryInterface.dropTable('technical_items')
+    await queryInterface.dropTable('tech_items')
+    await queryInterface.dropTable('tech_item_subordinations')
   }
 }

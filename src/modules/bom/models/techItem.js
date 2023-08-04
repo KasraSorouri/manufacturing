@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize')
 
 const { sequelize } = require('../../../configs/db')
 
-class TechnicalItem extends Model {}
+class TechItem extends Model {}
 
-TechnicalItem.init({
+TechItem.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -35,23 +35,25 @@ TechnicalItem.init({
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  subordinateTo: {
-    type: DataTypes.INTEGER,
-  },
-  itemType: {
-    type: DataTypes.ENUM('SUPPLY','MAKE')
+  supplyType: {
+    type: DataTypes.ENUM('BUY','MAKE'),
+    defaultValue: 'BUY'
   },
   relatedBom: {
     type: DataTypes.INTEGER,
     allowNull: function () {
       return this.itemType !== 'MAKE'
     }
-  }
+  },
+  active: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
 }, {
   sequelize,
   underscored: true,
   timestamps: false,
-  modelName: 'technicalItem'
+  modelName: 'techItem'
 })
 
-module.exports = TechnicalItem
+module.exports = TechItem
