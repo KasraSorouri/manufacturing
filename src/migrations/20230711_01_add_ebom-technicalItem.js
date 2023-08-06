@@ -168,7 +168,7 @@ module.exports = {
       related_bom: {
         type: DataTypes.INTEGER,
         allowNull: function () {
-          return this.itemType !== 'MAKE'
+          return this.supply_type !== 'MAKE'
         }
       },
       active: {
@@ -183,7 +183,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      tech_id: {
+      master_id: {
         type: DataTypes.INTEGER,
         references: {
           model: 'tech_items',
@@ -202,7 +202,7 @@ module.exports = {
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable('ebom_items')
     await queryInterface.dropTable('eboms')
-    await queryInterface.dropTable('tech_items')
     await queryInterface.dropTable('tech_item_subordinations')
+    await queryInterface.dropTable('tech_items')
   }
 }

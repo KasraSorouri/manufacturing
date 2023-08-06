@@ -42,7 +42,7 @@ TechItem.init({
   relatedBom: {
     type: DataTypes.INTEGER,
     allowNull: function () {
-      return this.itemType !== 'MAKE'
+      return this.supplyType !== 'MAKE'
     }
   },
   active: {

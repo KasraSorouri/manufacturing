@@ -11,6 +11,6 @@ router.get('/:id', techItem.getTechItem)
 router.post('/', tokenExtractor, rightAuthority(['T_ITEM_ADD']), techItem.addTechItem)
 
 // Edit TechnicalItem
-//router.put('/:id', tokenExtractor, rightAuthority(['BOM_ADD']), eBomController.editEBom)
+router.put('/:id', tokenExtractor, rightAuthority(['T_ITEM_EDIT']), techItem.editTechItem)
 
 module.exports = router

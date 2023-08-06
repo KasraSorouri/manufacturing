@@ -19,12 +19,12 @@ TechItem.belongsTo(EBom, { foreignKey: 'relatedBom' })
 TechItem.belongsToMany(TechItem, {
   through: 'TechItemSubordination',
   foreignKey: 'subordinateId',
-  as: 'subordinateItem'
+  as: 'subordinateItems'
 })
 TechItem.belongsToMany(TechItem, {
   through: 'TechItemSubordination',
-  foreignKey: 'techID',
-  as: 'techItem'
+  foreignKey: 'masterId',
+  as: 'MasterItems'
 })
 
 module.exports = {

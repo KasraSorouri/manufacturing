@@ -1,7 +1,7 @@
 const techItemProcessor = async( props ) => {
   //console.log('technicalItem props ->', props)
   const techItem = props.techItemData
-  //console.log('technicalItem data ->', technicalItem)
+  console.log('TechItem * Processor * technicalItem data ->', techItem)
 
   const newTechItem = {
     technicalName: techItem.technicalName,
@@ -10,11 +10,12 @@ const techItemProcessor = async( props ) => {
     unit: techItem.unit,
     alternativeUnit: techItem.alternativeUnit,
     subordinate: techItem.subordinate,
+    masterItems: techItem.masterItems, // Master Technical Items
     supplyType: techItem.supplyType,
-    relatedBom: techItem.relatedBom,
+    relatedBom: techItem.relatedBom, // Related BOM for Making this Item
     active: techItem.active
   }
-  //console.log('** technicalItem processed data ->', newTechnicalItem)
+  console.log('** TechItem * Processor * processed data ->', newTechItem)
 
   return newTechItem
 }

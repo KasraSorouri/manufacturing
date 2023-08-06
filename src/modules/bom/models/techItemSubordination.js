@@ -2,15 +2,15 @@ const { Model, DataTypes } = require('sequelize')
 
 const { sequelize } = require('../../../configs/db')
 
-class techItemSubordinations extends Model {}
+class TechItemSubordinations extends Model {}
 
-techItemSubordinations.init({
+TechItemSubordinations.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  techId: {
+  masterId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: { model: 'techItem', key: 'id' }
@@ -27,4 +27,4 @@ techItemSubordinations.init({
   modelName: 'techItemSubordinations'
 })
 
-module.exports = techItemSubordinations
+module.exports = TechItemSubordinations
