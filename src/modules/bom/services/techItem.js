@@ -1,10 +1,22 @@
-const { TechItem, TechItemSubordinations } = require('../models')
+const { Op } = require('sequelize')
+const { TechItem } = require('../models')
 const { techItemProcessor } = require('../utils/techItemProcessor')
 
-const getAllTechItems = async() => {
+const getAllTechItems = async(filterParams) => {
   const techItems = await TechItem.findAll({
-    model: TechItem,
-    as: 'masterItem',
+    where: {
+      technicalName : {
+        [Op.iLike]: `%${filterParams.technicalName || ''}%`
+      }
+    },
+    include: {
+      model: TechItem,
+      as: 'masterItems',
+      attributes: ['id','technicalName'],
+      through: {
+        attributes: []
+      },
+    },
   })
   return techItems
 }
@@ -18,9 +30,11 @@ const createTechItem = async ({ techItemData }) => {
   const newTechItem = await techItemProcessor({ techItemData })
   try {
     const techItem = await TechItem.create(newTechItem)
+    updateTechItemSubordinations({ id : techItem.id, masterItems: techItemData.masterItems })
+
     return techItem
   } catch(err) {
-    throw new Error(err.original.detail)
+    throw new Error(err)
   }
 }
 
@@ -32,18 +46,16 @@ const updateTechItem = async ({ id, techItemData }) => {
 
   try {
     const techItem = await TechItem.findByPk(id)
-    console.log(' techItem * Services * edit * techItem ->',techItem)
+    //console.log(' techItem * Services * edit * techItem ->',techItem)
 
     await techItem.update(newData)
     console.log(' techItem * Services * edit * updated techItem ** ->',techItem)
 
-    if (techItemData.masterItems.length > 0) {
-      updateTechItemSubordinations({ id : techItem.id, masterItems: techItemData.masterItems })
-    }
+    // Add Master Items for Sobordinates
+    updateTechItemSubordinations({ id : techItem.id, masterItems: techItemData.masterItems })
+
     return techItem
   } catch(err) {
-    console.log(' techItem * Services * edit * uerror ** ->',err)
-
     throw new Error(err.original.detail)
   }
 }
@@ -51,21 +63,29 @@ const updateTechItem = async ({ id, techItemData }) => {
 const updateTechItemSubordinations = async ({ id, masterItems }) => {
 
   const techItem = await TechItem.findByPk(id)
+
   if (!techItem) {
-    throw new Error('user not found')
+    throw new Error('Item not found')
   }
   await techItem.setMasterItems([])
-  const okMaterItems = await TechItem.findAll({ where: { id: [...masterItems], active: true } })
-  if (okMaterItems.length === 0) {
-    throw new Error('no Active role found')
+
+  if ( masterItems.length > 0 ){
+    const okMaterItems = await TechItem.findAll({ where: { id: [...masterItems], active: true } })
+    if (okMaterItems.length === 0) {
+      throw new Error('no Active Item found')
+    }
+    try {
+      await techItem.addMasterItems(okMaterItems)
+    }catch (err) {
+      throw new Error('Something wrong happend, Check Technical Item again')
+    }
   }
-  try {
-    await techItem.addRoles(okMaterItems)
+  try{
     const result = await TechItem.findByPk(id,{
-      //attributes : { exclude: [ 'userRoles'] },
       include: {
-        model: TechItemSubordinations,
-        attributes: ['technicalName'],
+        model: TechItem,
+        as: 'subordinateItems',
+        attributes: ['id','technicalName'],
         through: {
           attributes: []
         },

@@ -2,6 +2,8 @@ const { Model, DataTypes } = require('sequelize')
 
 const { sequelize } = require('../../../configs/db')
 
+const { TechItem } = require('./index')
+
 class TechItemSubordinations extends Model {}
 
 TechItemSubordinations.init({
@@ -13,12 +15,12 @@ TechItemSubordinations.init({
   masterId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: { model: 'techItem', key: 'id' }
+    references: { model: TechItem , key: 'id' }
   },
   subordinateId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: { model: 'techItem', key: 'id' }
+    references: { model: TechItem , key: 'id' }
   }
 }, {
   sequelize,

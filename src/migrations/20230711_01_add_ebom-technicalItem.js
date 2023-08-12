@@ -188,17 +188,22 @@ module.exports = {
         references: {
           model: 'tech_items',
           key: 'id'
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       subordinate_id: {
         type: DataTypes.INTEGER,
         references: {
           model: 'tech_items',
           key: 'id'
-        }
-      }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
     })
   },
+
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable('ebom_items')
     await queryInterface.dropTable('eboms')

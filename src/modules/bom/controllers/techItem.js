@@ -1,14 +1,23 @@
 const techItemServices = require('../services/techItem')
 
 const getAllTechItems = async (req, res) => {
+
+  // Extract the filter parameters
+  const encodedData = req.query.data
+  const decodedData = decodeURIComponent(encodedData)
+  const parsedObject = JSON.parse(decodedData)
+  const filterParams = parsedObject
+
+  // Get All tecnical Items based on Filter Params
   try{
-    const techItems = await techItemServices.getAllTechItems()
+    const techItems = await techItemServices.getAllTechItems(filterParams)
     res.json(techItems)
   } catch (err) {
     res.status(500).json({ error: 'No Item found' })
   }
 }
 
+// Get One technical Item based on Id
 const getTechItem = async (req, res) => {
   const id = Number(req.params.id)
   try {
@@ -19,7 +28,7 @@ const getTechItem = async (req, res) => {
   }
 }
 
-
+// Create a new Tchnical Item
 const addTechItem = async (req, res) => {
   const techItemData = req.body
   try {
@@ -30,11 +39,11 @@ const addTechItem = async (req, res) => {
   }
 }
 
+// Edit a Technical Item
 const editTechItem = async (req, res) => {
   const id = Number(req.params.id)
   const techItemData = req.body
 
-  console.log(' techItem * controller * edit * techItemData ->',techItemData)
   try {
     const updatedTechItem = await techItemServices.updateTechItem({ id, techItemData })
     res.status(200).json(updatedTechItem.dataValue)

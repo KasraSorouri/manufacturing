@@ -12,7 +12,7 @@ const techItemProcessor = async( props ) => {
     subordinate: techItem.subordinate,
     masterItems: techItem.masterItems, // Master Technical Items
     supplyType: techItem.supplyType,
-    relatedBom: techItem.relatedBom, // Related BOM for Making this Item
+    relatedBom: null,// Related BOM for Making this Item
     active: techItem.active
   }
   console.log('** TechItem * Processor * processed data ->', newTechItem)
